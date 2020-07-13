@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Form.scss";
+import { validateUserData } from "./validateUserData";
 
 export default function Form() {
   // display confirmPassword input when set to false
@@ -7,6 +8,8 @@ export default function Form() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [errors, setErrors] = useState([]);
+  const [successes, setSuccess] = useState([]);
 
   const switchFormToLogin = () => {
     setIsLoginFormSelected(true);
@@ -19,7 +22,12 @@ export default function Form() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(email, password, confirmPassword);
+    const userData = isLoginFormSelected
+      ? { email, password }
+      : { email, password, confirmPassword };
+    const errors = validateUserData(userData);
+    setErrors(errors);
+    if (errors.length > 0) return;
   };
 
   return (
@@ -27,8 +35,8 @@ export default function Form() {
       <div className="form-switch-container">
         <div className="form-switch">
           <div className="form-switch-options">
-            <div onClick={switchFormToLogin} className="form-switch-signin">
-              Sign in
+            <div onClick={switchFormToLogin} className="form-switch-login">
+              Log in
             </div>
             <div onClick={switchFormToSignup} className="form-switch-signup">
               Sign up
@@ -79,10 +87,10 @@ export default function Form() {
           <input
             onChange={(e) => handleChange(e, setConfirmPassword)}
             value={confirmPassword}
-            className={"input"}
+            className="input"
             type="password"
-            name="confirm_password"
-            id="confirm_password"
+            name="confirm-password"
+            id="confirm-password"
             placeholder="Confirm your password..."
             required
           />
@@ -90,8 +98,8 @@ export default function Form() {
       )}
 
       <button
-        className="button"
-        type="sumit"
+        className="submit-button"
+        type="submit"
         disabled={
           isLoginFormSelected
             ? !email || !password
@@ -100,9 +108,13 @@ export default function Form() {
       >
         Send
       </button>
-
-      {/* <div className="message success-message">You can now log in</div>
-      <div className="message error-message">Wrong password</div> */}
+      {/* shows only first error/success message */}
+      {errors.length > 0 && (
+        <div className="message error-message">{errors[0]}</div>
+      )}
+      {successes.length > 0 && (
+        <div className="message success-message">{successes[0]}</div>
+      )}
     </form>
   );
 }
