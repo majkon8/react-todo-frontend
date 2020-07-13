@@ -1,0 +1,126 @@
+.form-container {
+  .label,
+  .input {
+    display: block;
+  }
+
+  .label {
+    font-size: 12px;
+    font-weight: bold;
+    margin: 5px 0;
+    color: #666;
+  }
+
+  .input {
+    width: 100%;
+    height: 50px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    padding: 1px 10px;
+    box-sizing: border-box;
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 3pt 2pt rgb(169, 215, 204);
+    }
+  }
+
+  .button {
+    width: 100%;
+    height: 50px;
+    background-color: rgb(147, 206, 222);
+    border: 1px solid rgb(147, 206, 222);
+    border-radius: 50px;
+    color: white;
+    font-weight: bold;
+    font-size: 22px;
+    cursor: pointer;
+    transition: background 0.5s;
+
+    &:hover {
+      background-color: rgb(169, 215, 204);
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      background-color: rgba(147, 206, 222, 0.5);
+      border-color: rgba(147, 206, 222, 0.5);
+
+      &:hover {
+        background-color: rgba(147, 206, 222, 0.5);
+      }
+    }
+  }
+
+  .form-switch-container {
+    .form-switch {
+      // each option have a width of 62px and 5px margin, so whole width is 144px
+      width: 144px;
+      margin: auto;
+      .underline {
+        // The same width as form-switch options
+        width: 62px;
+        height: 4px;
+        background: rgb(147, 206, 222);
+        border: none;
+        transition: all 0.5s ease-in-out;
+      }
+
+      .underline-signin {
+        margin-left: 5px;
+      }
+
+      .underline-signup {
+        // move 10px of margin and 62px of sign up option width
+        margin-left: 77px;
+      }
+
+      .form-switch-options {
+        display: flex;
+        justify-content: center;
+        text-transform: uppercase;
+        font-weight: bold;
+
+        .form-switch-signin,
+        .form-switch-signup {
+          margin: 0 5px;
+          cursor: pointer;
+          transition: color 0.2s;
+          width: 62px;
+          text-align: center;
+
+          &:hover {
+            color: rgb(147, 206, 222);
+          }
+        }
+      }
+    }
+  }
+
+  .message {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 14px;
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    opacity: 0.8;
+    font-weight: bold;
+  }
+
+  .success-message {
+    background-color: hsl(141, 53%, 53%);
+  }
+
+  .error-message {
+    background-color: hsl(348, 100%, 61%);
+  }
+
+  @media screen and (max-width: 768px) {
+  }
+}

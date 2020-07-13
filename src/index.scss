@@ -1,0 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+
+body {
+  margin: 0;
+  padding: 20px;
+  font-family: "Roboto", sans-serif;
+  height: 100vh;
+  background: linear-gradient(to bottom left, rgb(147, 206, 222), #222);
+
+  @media screen and (max-width: 768px) {
+    background: white;
+    padding: 0;
+  }
+}
