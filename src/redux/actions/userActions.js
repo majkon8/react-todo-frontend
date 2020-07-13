@@ -7,6 +7,7 @@ export const signup = (userData) => async (dispatch) => {
     const response = await axios.post("/api/users/signup", userData);
     if (!response.data.success) {
       dispatch({ type: SET_ERROR, payload: response.data.message });
+      dispatch({ type: SET_SUCCESS, payload: null });
       return;
     }
     dispatch({ type: SET_ERROR, payload: null });
@@ -24,6 +25,7 @@ export const login = (userData) => async (dispatch) => {
     const response = await axios.post("/api/users/login", userData);
     if (!response.data.success) {
       dispatch({ type: SET_ERROR, payload: response.data.message });
+      dispatch({ type: SET_SUCCESS, payload: null });
       return;
     }
     setAuthorizationHeader(response.data.data);

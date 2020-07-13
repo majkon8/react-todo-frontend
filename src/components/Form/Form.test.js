@@ -3,9 +3,10 @@ import Form from "./Form";
 import { mount } from "enzyme";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
+import thunk from "redux-thunk";
 
 const initialStore = { UI: { loading: false, error: null, success: null } };
-const mockedStore = configureMockStore()(initialStore);
+const mockedStore = configureMockStore([thunk])(initialStore);
 
 const mountWithProvider = (children) => (store = mockedStore) =>
   mount(<Provider store={store}>{children}</Provider>);

@@ -38,8 +38,8 @@ function Form({ signup, login, UI }) {
     // set only first error
     setError(errors[0]);
     if (errors.length > 0) return;
-    // if (isLoginFormSelected) login(userData);
-    // else signup(userData);
+    if (isLoginFormSelected) return login(userData);
+    else return signup(userData);
   };
 
   return (
