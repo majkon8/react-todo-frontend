@@ -1,16 +1,31 @@
 import React from "react";
 import Form from "./Form";
-import { shallow } from "enzyme";
+import { mount } from "enzyme";
+import { Provider } from "react-redux";
+import configureMockStore from "redux-mock-store";
+
+const initialStore = { UI: { loading: false, error: null, success: null } };
+const mockedStore = configureMockStore()(initialStore);
+
+const mountWithProvider = (children) => (store = mockedStore) =>
+  mount(<Provider store={store}>{children}</Provider>);
 
 describe("Testing form component", () => {
-  let form;
+  let wrapper;
   beforeEach(() => {
-    form = shallow(<Form />);
+    wrapper = mountWithProvider(<Form />)();
+  });
+  test("includs form component", () => {
+    expect(wrapper.find("form").exists()).toEqual(true);
+  });
+
+  test("includes form", () => {
+    expect(wrapper.find("form").exists()).toEqual(true);
   });
 
   test("includes email and password input", () => {
     expect(
-      form.containsAllMatchingElements([
+      wrapper.containsAllMatchingElements([
         <input
           className="input"
           type="email"
@@ -33,7 +48,7 @@ describe("Testing form component", () => {
 
   test("includes submit button", () => {
     expect(
-      form.containsMatchingElement(
+      wrapper.containsMatchingElement(
         <button className="submit-button" type="submit">
           Send
         </button>
@@ -43,7 +58,7 @@ describe("Testing form component", () => {
 
   test("includes login/signup switch", () => {
     expect(
-      form.containsAllMatchingElements([
+      wrapper.containsAllMatchingElements([
         <div className="form-switch-login">Log in</div>,
         <div className="form-switch-signup">Sign up</div>,
       ])
@@ -51,14 +66,14 @@ describe("Testing form component", () => {
   });
 
   test("value of email and password inputs are ''", () => {
-    expect(form.find("#email").props().value).toEqual("");
-    expect(form.find("#password").props().value).toEqual("");
+    expect(wrapper.find("#email").props().value).toEqual("");
+    expect(wrapper.find("#password").props().value).toEqual("");
   });
 
   test("switching between login/signup form works", () => {
-    form.find(".form-switch-signup").simulate("click");
+    wrapper.find(".form-switch-signup").simulate("click");
     expect(
-      form.containsMatchingElement(
+      wrapper.containsMatchingElement(
         <input
           className="input"
           type="password"
@@ -69,10 +84,10 @@ describe("Testing form component", () => {
         />
       )
     ).toEqual(true);
-    expect(form.find("#confirm-password").props().value).toEqual("");
-    form.find(".form-switch-login").simulate("click");
+    expect(wrapper.find("#confirm-password").props().value).toEqual("");
+    wrapper.find(".form-switch-login").simulate("click");
     expect(
-      form.containsMatchingElement(
+      wrapper.containsMatchingElement(
         <input
           className="input"
           type="password"
@@ -86,57 +101,61 @@ describe("Testing form component", () => {
   });
 
   test("typing in inputs and submit button disabling works", () => {
-    expect(form.find(".submit-button").props().disabled).toEqual(true);
-    form.find("#email").simulate("change", { target: { value: "email" } });
-    expect(form.find(".submit-button").props().disabled).toEqual(true);
-    form
+    expect(wrapper.find(".submit-button").props().disabled).toEqual(true);
+    wrapper.find("#email").simulate("change", { target: { value: "email" } });
+    expect(wrapper.find(".submit-button").props().disabled).toEqual(true);
+    wrapper
       .find("#password")
       .simulate("change", { target: { value: "password" } });
-    expect(form.find(".submit-button").props().disabled).toEqual(false);
-    form.find(".form-switch-signup").simulate("click");
-    expect(form.find(".submit-button").props().disabled).toEqual(true);
-    form
+    expect(wrapper.find(".submit-button").props().disabled).toEqual(false);
+    wrapper.find(".form-switch-signup").simulate("click");
+    expect(wrapper.find(".submit-button").props().disabled).toEqual(true);
+    wrapper
       .find("#confirm-password")
       .simulate("change", { target: { value: "confirm" } });
-    expect(form.find(".submit-button").props().disabled).toEqual(false);
-    expect(form.find("#email").props().value).toEqual("email");
-    expect(form.find("#password").props().value).toEqual("password");
-    expect(form.find("#confirm-password").props().value).toEqual("confirm");
+    expect(wrapper.find(".submit-button").props().disabled).toEqual(false);
+    expect(wrapper.find("#email").props().value).toEqual("email");
+    expect(wrapper.find("#password").props().value).toEqual("password");
+    expect(wrapper.find("#confirm-password").props().value).toEqual("confirm");
   });
 
   test("doesn't include error nor success message", () => {
-    expect(form.find(".message").exists()).toEqual(false);
+    expect(wrapper.find(".message").exists()).toEqual(false);
   });
 
   test("shows error messages on submit", () => {
-    form.find(".form-switch-signup").simulate("click");
-    form.find("#email").simulate("change", { target: { value: "test@test" } });
-    form
+    wrapper.find(".form-switch-signup").simulate("click");
+    wrapper
+      .find("#email")
+      .simulate("change", { target: { value: "test@test" } });
+    wrapper
       .find("#password")
       .simulate("change", { target: { value: "password" } });
-    form
+    wrapper
       .find("#confirm-password")
       .simulate("change", { target: { value: "confirm" } });
     const event = { preventDefault: () => {} };
     jest.spyOn(event, "preventDefault");
-    form.simulate("submit", event);
-    expect(form.find(".error-message").text()).toEqual(
+    wrapper.find("form").simulate("submit", event);
+    expect(wrapper.find(".error-message").text()).toEqual(
       "Invalid email adddress"
     );
-    form
+    wrapper
       .find("#email")
       .simulate("change", { target: { value: "test@test.com" } });
-    form.simulate("submit", event);
-    expect(form.find(".error-message").text()).toEqual("Password too weak");
-    form
+    wrapper.find("form").simulate("submit", event);
+    expect(wrapper.find(".error-message").text()).toEqual("Password too weak");
+    wrapper
       .find("#password")
       .simulate("change", { target: { value: "Password.123" } });
-    form.simulate("submit", event);
-    expect(form.find(".error-message").text()).toEqual("Passwords must match");
-    form
+    wrapper.find("form").simulate("submit", event);
+    expect(wrapper.find(".error-message").text()).toEqual(
+      "Passwords must match"
+    );
+    wrapper
       .find("#confirm-password")
       .simulate("change", { target: { value: "Password.123" } });
-    form.simulate("submit", event);
-    expect(form.find(".error-message").exists()).toEqual(false);
+    wrapper.find("form").simulate("submit", event);
+    expect(wrapper.find(".error-message").exists()).toEqual(false);
   });
 });

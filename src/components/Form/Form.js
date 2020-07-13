@@ -1,15 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Form.scss";
 import { validateUserData } from "./validateUserData";
+import PropTypes from "prop-types";
+// Redux
+import { connect } from "react-redux";
+import { signup, login } from "../../redux/actions/userActions";
 
-export default function Form() {
+function Form({ signup, login, UI }) {
   // display confirmPassword input when set to false
   const [isLoginFormSelected, setIsLoginFormSelected] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [errors, setErrors] = useState([]);
-  const [successes, setSuccess] = useState([]);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
+
+  useEffect(() => {
+    setError(UI.error);
+    setSuccess(UI.success);
+  }, [UI]);
 
   const switchFormToLogin = () => {
     setIsLoginFormSelected(true);
@@ -26,8 +35,11 @@ export default function Form() {
       ? { email, password }
       : { email, password, confirmPassword };
     const errors = validateUserData(userData);
-    setErrors(errors);
+    // set only first error
+    setError(errors[0]);
     if (errors.length > 0) return;
+    // if (isLoginFormSelected) login(userData);
+    // else signup(userData);
   };
 
   return (
@@ -106,15 +118,30 @@ export default function Form() {
             : !email || !password || !confirmPassword
         }
       >
-        Send
+        {UI.loading ? (
+          <div className="lds-ring">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        ) : (
+          "Send"
+        )}
       </button>
-      {/* shows only first error/success message */}
-      {errors.length > 0 && (
-        <div className="message error-message">{errors[0]}</div>
-      )}
-      {successes.length > 0 && (
-        <div className="message success-message">{successes[0]}</div>
-      )}
+      {error && <div className="message error-message">{error}</div>}
+      {success && <div className="message success-message">{success}</div>}
     </form>
   );
 }
+
+Form.propTypes = {
+  signup: PropTypes.func.isRequired,
+  login: PropTypes.func.isRequired,
+  UI: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({ UI: state.UI });
+const mapActionsToProps = { signup, login };
+
+export default connect(mapStateToProps, mapActionsToProps)(Form);
