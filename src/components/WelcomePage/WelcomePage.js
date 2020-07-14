@@ -6,7 +6,7 @@ import Form from "../Form/Form";
 export default function Login() {
   return (
     <div className="flex-container">
-      <div className="welcome-page-container">
+      <div className="page-container">
         <div className="welcome-image-container">
           <img className="todo-image" src={todoImage} alt="todo" />
         </div>

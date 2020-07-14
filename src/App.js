@@ -6,13 +6,15 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 // Components
 import WelcomePage from "./components/WelcomePage/WelcomePage";
+import MainPage from "./components/MainPage/MainPage";
 
 function App() {
   return (
     <Router>
       <Provider store={store}>
         <Switch>
-          <Route path="/" component={WelcomePage} />
+          <Route exact path="/" component={MainPage} />
+          <Route path="/welcome" component={WelcomePage} />
         </Switch>
       </Provider>
     </Router>

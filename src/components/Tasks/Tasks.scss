@@ -1,0 +1,18 @@
+.tasks-container {
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 20px;
+
+  .task:nth-child(even) {
+    background: white;
+  }
+
+  .task:nth-child(odd) {
+    background-color: #eee;
+  }
+
+  .task:hover {
+    background-color: rgb(147, 206, 222);
+    color: white;
+  }
+}

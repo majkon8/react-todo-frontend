@@ -1,0 +1,17 @@
+.page-container {
+  .group-panel,
+  .task-panel {
+    padding: 50px;
+    min-height: 300px;
+  }
+
+  .group-panel {
+    width: 30%;
+    background-color: rgb(169, 215, 204);
+  }
+
+  .task-panel {
+    width: 70%;
+    background-color: white;
+  }
+}
