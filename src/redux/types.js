@@ -5,3 +5,5 @@ export const SET_LOADING_UI = "SET_LOADING_UI";
 // user reducer types
 export const SET_AUTHENTICATED = "SET_AUTHENTICATED";
 export const SET_USER = "SET_USER";
+// task reducer types
+export const SET_TASKS = "SET_TASKS";
