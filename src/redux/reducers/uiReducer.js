@@ -9,9 +9,9 @@ const initialState = {
 export default function (state = initialState, action) {
   switch (action.type) {
     case SET_ERROR:
-      return { ...state, error: action.payload };
+      return { ...state, error: action.payload, success: null };
     case SET_SUCCESS:
-      return { ...state, success: action.payload };
+      return { ...state, success: action.payload, error: null };
     case SET_LOADING_UI:
       return { ...state, loading: action.payload };
     default:
