@@ -5,16 +5,17 @@ import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";
 
-const initialStore = { UI: { loading: false, error: null, success: null } };
-const mockedStore = configureMockStore([thunk])(initialStore);
-
-const mountWithProvider = (children) => (store = mockedStore) =>
-  mount(<Provider store={store}>{children}</Provider>);
+let initialStore = { UI: { loading: false, error: null, success: null } };
+let mockedStore = configureMockStore([thunk])(initialStore);
 
 describe("Testing form component", () => {
   let wrapper;
   beforeEach(() => {
-    wrapper = mountWithProvider(<Form />)();
+    wrapper = mount(
+      <Provider store={mockedStore}>
+        <Form />
+      </Provider>
+    );
   });
   test("includs form component", () => {
     expect(wrapper.find("form").exists()).toEqual(true);
@@ -47,7 +48,7 @@ describe("Testing form component", () => {
     ).toEqual(true);
   });
 
-  test("includes submit button", () => {
+  test("includes submit button and doesn't include loading spinner", () => {
     expect(
       wrapper.containsMatchingElement(
         <button className="submit-button" type="submit">
@@ -55,6 +56,16 @@ describe("Testing form component", () => {
         </button>
       )
     ).toEqual(true);
+    expect(
+      wrapper.containsMatchingElement(
+        <div className="lds-ring">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      )
+    ).toEqual(false);
   });
 
   test("includes login/signup switch", () => {
@@ -158,5 +169,51 @@ describe("Testing form component", () => {
       .simulate("change", { target: { value: "Password.123" } });
     wrapper.find("form").simulate("submit", event);
     expect(wrapper.find(".error-message").exists()).toEqual(false);
+  });
+
+  test("shows loading spinner on submit buttton when UI loads", () => {
+    initialStore = { UI: { loading: true, error: null, success: null } };
+    mockedStore = configureMockStore([thunk])(initialStore);
+    wrapper = mount(
+      <Provider store={mockedStore}>
+        <Form />
+      </Provider>
+    );
+    expect(
+      wrapper.containsMatchingElement(
+        <div className="lds-ring">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      )
+    ).toEqual(true);
+    expect(wrapper.find(".submit-button").text()).not.toEqual("Send");
+  });
+
+  test("errors and successes from redux are showing up", () => {
+    initialStore = {
+      UI: { loading: false, error: "Error message", success: null },
+    };
+    mockedStore = configureMockStore([thunk])(initialStore);
+    wrapper = mount(
+      <Provider store={mockedStore}>
+        <Form />
+      </Provider>
+    );
+    expect(wrapper.find(".error-message").text()).toEqual("Error message");
+    expect(wrapper.find(".success-message").exists()).toEqual(false);
+    initialStore = {
+      UI: { loading: false, error: null, success: "Success message" },
+    };
+    mockedStore = configureMockStore([thunk])(initialStore);
+    wrapper = mount(
+      <Provider store={mockedStore}>
+        <Form />
+      </Provider>
+    );
+    expect(wrapper.find(".error-message").exists()).toEqual(false);
+    expect(wrapper.find(".success-message").text()).toEqual("Success message");
   });
 });
