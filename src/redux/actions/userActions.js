@@ -1,4 +1,9 @@
-import { SET_LOADING_UI, SET_ERROR, SET_SUCCESS } from "../types";
+import {
+  SET_LOADING_UI,
+  SET_ERROR,
+  SET_SUCCESS,
+  SET_AUTHENTICATED,
+} from "../types";
 import axios from "axios";
 
 export const signup = (userData) => async (dispatch) => {
@@ -26,6 +31,7 @@ export const login = (userData) => async (dispatch) => {
       return;
     }
     setAuthorizationHeader(response.data.data);
+    dispatch({ type: SET_AUTHENTICATED, payload: true });
     dispatch({ type: SET_SUCCESS, payload: response.data.message });
   } catch (error) {
     console.error(error);
@@ -35,7 +41,10 @@ export const login = (userData) => async (dispatch) => {
 };
 
 // HELPERS
-const setAuthorizationHeader = (token) => {
-  const header = `Bearer ${token}`;
-  axios.defaults.headers.common["Authorization"] = header;
+const setAuthorizationHeader = (tokens) => {
+  const accessToken = tokens.accessToken;
+  const refreshToken = tokens.refreshToken;
+  const authHeader = `Bearer ${accessToken}`;
+  axios.defaults.headers.common["Authorization"] = authHeader;
+  localStorage.setItem("refreshToken", refreshToken);
 };
