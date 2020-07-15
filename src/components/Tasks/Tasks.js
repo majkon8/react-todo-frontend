@@ -17,7 +17,12 @@ function Tasks({ getTasks, loading, tasks }) {
       <AddTask />
       <div className="tasks-container">
         {tasks.map((task, index) => (
-          <Task taskId={task.id} body={task.body} key={index} />
+          <Task
+            taskId={task.id}
+            body={task.body}
+            done={task.done}
+            key={index}
+          />
         ))}
       </div>
     </div>

@@ -9,3 +9,4 @@ export const SET_USER = "SET_USER";
 export const SET_TASKS = "SET_TASKS";
 export const CREATE_TASK = "CREATE_TASK";
 export const DELETE_TASK = "DELETE_TASK";
+export const TOGGLE_TASK_DONE = "TOGGLE_TASK_DONE";

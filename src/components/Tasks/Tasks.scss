@@ -15,4 +15,16 @@
     background-color: rgb(147, 206, 222);
     color: white;
   }
+
+  .task-done:nth-child(even):hover {
+    background-color: white;
+  }
+
+  .task-done:nth-child(odd):hover {
+    background-color: #eee;
+  }
+
+  .task-done:hover {
+    color: #999;
+  }
 }

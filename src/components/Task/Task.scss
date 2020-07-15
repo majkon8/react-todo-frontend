@@ -3,7 +3,7 @@
   height: 50px;
   cursor: pointer;
   transition: background-color 0.5s, color 0.5s;
-  color: #666;
+  color: #444;
   padding-right: 30px;
   display: flex;
   align-items: center;
@@ -17,22 +17,54 @@
     white-space: nowrap;
   }
 
-  .is-done {
+  .task-done {
     text-decoration: line-through;
+    color: #999;
+  }
+
+  .icon-star-container {
+    &:hover {
+      .icon-star-full {
+        display: inline-block;
+      }
+      .icon-star-empty {
+        display: none;
+      }
+    }
+
+    .icon-star-full {
+      display: none;
+    }
+
+    .icon-star {
+      color: gold;
+    }
+  }
+
+  .icon-trash-container {
+    position: absolute;
+    right: 0;
+
+    &:hover {
+      .icon-trash-full {
+        display: inline-block;
+      }
+      .icon-trash-empty {
+        display: none;
+      }
+    }
+
+    .icon-trash-full {
+      display: none;
+    }
+
+    .icon-trash {
+      color: hsl(348, 100%, 61%);
+    }
   }
 
   .icon {
     font-size: 20px;
     padding: 10px;
-  }
-
-  .icon-star-empty {
-    color: gold;
-  }
-
-  .trash-icon {
-    color: hsl(348, 100%, 61%);
-    position: absolute;
-    right: 0;
   }
 }

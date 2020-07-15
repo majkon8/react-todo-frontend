@@ -1,4 +1,10 @@
-import { SET_TASKS, SET_LOADING_UI, CREATE_TASK, DELETE_TASK } from "../types";
+import {
+  SET_TASKS,
+  SET_LOADING_UI,
+  CREATE_TASK,
+  DELETE_TASK,
+  TOGGLE_TASK_DONE,
+} from "../types";
 import axios from "axios";
 
 export const getTasks = () => async (dispatch) => {
@@ -39,6 +45,19 @@ export const deleteTask = (taskId) => async (dispatch) => {
       return;
     }
     dispatch({ type: DELETE_TASK, payload: taskId });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const toggleTaskDone = (data) => async (dispatch) => {
+  try {
+    const response = await axios.patch("/api/tasks/", data);
+    if (!response.data.success) {
+      console.error(response.data.message);
+      return;
+    }
+    dispatch({ type: TOGGLE_TASK_DONE, payload: data.taskId });
   } catch (error) {
     console.error(error);
   }
