@@ -1,4 +1,4 @@
-import { SET_TASKS, SET_LOADING_UI } from "../types";
+import { SET_TASKS, SET_LOADING_UI, CREATE_TASK } from "../types";
 import axios from "axios";
 
 export const getTasks = () => async (dispatch) => {
@@ -15,5 +15,18 @@ export const getTasks = () => async (dispatch) => {
     console.error(error);
   } finally {
     dispatch({ type: SET_LOADING_UI, payload: false });
+  }
+};
+
+export const createNewTask = (body) => async (dispatch) => {
+  try {
+    const response = await axios.post("/api/tasks/", { body });
+    dispatch({ type: CREATE_TASK, payload: response.data.createdTask });
+    if (!response.data.success) {
+      console.error(response.data.message);
+      return;
+    }
+  } catch (error) {
+    console.error(error);
   }
 };
