@@ -7,6 +7,12 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getTasks } from "../../redux/actions/dataActions";
 
+export function formatDate(dateTime) {
+  const date = dateTime.slice(0, 10).split("-").reverse().join(".");
+  const time = dateTime.slice(11, 16);
+  return `${date} ${time}`;
+}
+
 function Tasks({ getTasks, loading, tasks }) {
   useEffect(() => {
     getTasks();
@@ -21,6 +27,7 @@ function Tasks({ getTasks, loading, tasks }) {
             taskId={task.id}
             body={task.body}
             done={task.done}
+            createdAt={formatDate(task.created_at)}
             key={index}
           />
         ))}

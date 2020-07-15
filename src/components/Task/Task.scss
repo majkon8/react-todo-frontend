@@ -17,7 +17,7 @@
     white-space: nowrap;
   }
 
-  .task-done {
+  .task-body-done {
     text-decoration: line-through;
     color: #999;
   }
@@ -66,5 +66,13 @@
   .icon {
     font-size: 20px;
     padding: 10px;
+  }
+
+  .date {
+    position: absolute;
+    font-size: 12px;
+    bottom: 0;
+    left: 40px;
+    margin: 0;
   }
 }

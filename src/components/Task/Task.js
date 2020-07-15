@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { deleteTask, toggleTaskDone } from "../../redux/actions/dataActions";
 
-function Task({ taskId, body, done, deleteTask, toggleTaskDone }) {
+function Task({ taskId, body, done, createdAt, deleteTask, toggleTaskDone }) {
   const handleDeleteTask = (event) => {
     event.stopPropagation();
     deleteTask(taskId);
@@ -27,7 +27,7 @@ function Task({ taskId, body, done, deleteTask, toggleTaskDone }) {
         <i className="icon icon-star icon-star-full fa fa-star"></i>
       </div>
 
-      <p className={"task-body" + (done ? " task-done" : "")}>{body}</p>
+      <p className={"task-body" + (done ? " task-body-done" : "")}>{body}</p>
       <div className="icon-trash-container">
         <i
           onClick={handleDeleteTask}
@@ -38,6 +38,9 @@ function Task({ taskId, body, done, deleteTask, toggleTaskDone }) {
           className="icon icon-trash icon-trash-full fa fa-trash"
         ></i>
       </div>
+      <p className={"date" + (done ? " task-body-done" : "")}>
+        Added: {createdAt}
+      </p>
     </div>
   );
 }
@@ -46,6 +49,7 @@ Task.propTypes = {
   body: PropTypes.string.isRequired,
   done: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]).isRequired,
   taskId: PropTypes.number.isRequired,
+  createdAt: PropTypes.string.isRequired,
   deleteTask: PropTypes.func.isRequired,
   toggleTaskDone: PropTypes.func.isRequired,
 };
