@@ -4,10 +4,16 @@ import {
   DELETE_TASK,
   TOGGLE_TASK_DONE,
   TOGGLE_TASK_IMPORTANT,
+  SET_GROUP,
+  SET_GROUPS,
+  CREATE_GROUP,
+  DELETE_GROUP,
 } from "../types";
 
 const initialState = {
   tasks: [],
+  selectedGroup: null,
+  groups: [],
 };
 
 export default function (state = initialState, action) {
@@ -43,6 +49,19 @@ export default function (state = initialState, action) {
       return {
         ...state,
         tasks: [...updatedTasks],
+      };
+    case SET_GROUP:
+      return { ...state, selectedGroup: action.payload };
+    case SET_GROUPS:
+      return { ...state, groups: action.payload };
+    case CREATE_GROUP:
+      return { ...state, groups: [...state.groups, action.payload] };
+    case DELETE_GROUP:
+      return {
+        ...state,
+        groups: [
+          ...state.groups.filter((group) => group.id !== action.payload),
+        ],
       };
     default:
       return state;

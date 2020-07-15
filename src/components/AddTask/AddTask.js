@@ -3,39 +3,40 @@ import "./AddTask.scss";
 import PropTypes from "prop-types";
 // Redux
 import { connect } from "react-redux";
-import { createNewTask } from "../../redux/actions/dataActions";
+import { createTask } from "../../redux/actions/dataActions";
 
-function AddTask({ createNewTask }) {
+function AddTask({ createTask }) {
   const [taskBody, setTaskBody] = useState("");
 
-  const handleChange = (event) => setTaskBody(event.target.value);
+  const handleChange = (event) => {
+    if (taskBody.length >= 255) return;
+    setTaskBody(event.target.value);
+  };
 
   const submit = () => {
     if (taskBody.length === 0) return;
-    createNewTask(taskBody);
+    createTask(taskBody);
     setTaskBody("");
   };
 
   return (
-    <div className="add-task-container">
+    <div className="add-container add-task-container">
       <input
-        className="add-task-input"
+        className="add-input add-task-input"
         placeholder="Add new task..."
         type="text"
         value={taskBody}
         onChange={handleChange}
       />
-      <button onClick={submit} className="add-task-button">
+      <button onClick={submit} className="add-button add-task-button">
         +
       </button>
     </div>
   );
 }
 
-AddTask.propTypes = {
-  createNewTask: PropTypes.func.isRequired,
-};
+AddTask.propTypes = { createTask: PropTypes.func.isRequired };
 
-const mapActionsToProps = { createNewTask };
+const mapActionsToProps = { createTask };
 
 export default connect(null, mapActionsToProps)(AddTask);

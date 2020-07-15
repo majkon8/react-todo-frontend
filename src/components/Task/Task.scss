@@ -61,33 +61,6 @@
     }
   }
 
-  .icon-trash-container {
-    position: absolute;
-    right: 0;
-
-    &:hover {
-      .icon-trash-full {
-        display: inline-block;
-      }
-      .icon-trash-empty {
-        display: none;
-      }
-    }
-
-    .icon-trash-full {
-      display: none;
-    }
-
-    .icon-trash {
-      color: hsl(348, 100%, 61%);
-    }
-  }
-
-  .icon {
-    font-size: 20px;
-    padding: 10px;
-  }
-
   .date {
     position: absolute;
     font-size: 12px;

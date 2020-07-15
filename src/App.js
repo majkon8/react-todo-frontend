@@ -35,8 +35,8 @@ function App() {
     <Router>
       <Provider store={store}>
         <Switch>
-          <UnauthRoute exact path="/" component={MainPage} />
-          <AuthRoute path="/welcome" component={WelcomePage} />
+          <AuthRoute exact path="/" component={MainPage} />
+          <UnauthRoute path="/welcome" component={WelcomePage} />
         </Switch>
       </Provider>
     </Router>

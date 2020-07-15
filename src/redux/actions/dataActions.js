@@ -5,6 +5,10 @@ import {
   DELETE_TASK,
   TOGGLE_TASK_DONE,
   TOGGLE_TASK_IMPORTANT,
+  SET_GROUP,
+  SET_GROUPS,
+  CREATE_GROUP,
+  DELETE_GROUP,
 } from "../types";
 import axios from "axios";
 
@@ -25,7 +29,7 @@ export const getTasks = () => async (dispatch) => {
   }
 };
 
-export const createNewTask = (body) => async (dispatch) => {
+export const createTask = (body) => async (dispatch) => {
   try {
     const response = await axios.post("/api/tasks/", { body });
     dispatch({ type: CREATE_TASK, payload: response.data.createdTask });
@@ -72,6 +76,53 @@ export const togggleTaskImportant = (data) => async (dispatch) => {
       return;
     }
     dispatch({ type: TOGGLE_TASK_IMPORTANT, payload: data.taskId });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const setGroup = (groupId) => (dispatch) => {
+  dispatch({ type: SET_GROUP, payload: groupId });
+};
+
+export const getGroups = () => async (dispatch) => {
+  dispatch({ type: SET_LOADING_UI, payload: true });
+  try {
+    const response = await axios.get("/api/groups/");
+    if (!response.data.success) {
+      console.error(response.data.message);
+      return;
+    }
+    const groups = response.data.data;
+    dispatch({ type: SET_GROUPS, payload: groups });
+  } catch (error) {
+    console.error(error);
+  } finally {
+    dispatch({ type: SET_LOADING_UI, payload: false });
+  }
+};
+
+export const createGroup = (name) => async (dispatch) => {
+  try {
+    const response = await axios.post("/api/groups/", { name });
+    dispatch({ type: CREATE_GROUP, payload: response.data.createdGroup });
+    if (!response.data.success) {
+      console.error(response.data.message);
+      return;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const deleteGroup = (groupId) => async (dispatch) => {
+  try {
+    const response = await axios.delete("/api/groups/", { data: { groupId } });
+    if (!response.data.success) {
+      console.error(response.data.message);
+      return;
+    }
+    dispatch({ type: DELETE_GROUP, payload: groupId });
   } catch (error) {
     console.error(error);
   }

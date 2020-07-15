@@ -22,11 +22,11 @@ describe("AddTask component testing", () => {
     expect(
       wrapper.containsAllMatchingElements([
         <input
-          className="add-task-input"
+          className="add-input add-task-input"
           placeholder="Add new task..."
           type="text"
         />,
-        <button className="add-task-button">+</button>,
+        <button className="add-button add-task-button">+</button>,
       ])
     ).toEqual(true);
   });

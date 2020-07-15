@@ -1,0 +1,19 @@
+.add-group-input {
+  margin-right: 5px;
+}
+
+.add-group-input:focus {
+  box-shadow: 0 0 3pt 3pt rgb(147, 206, 222);
+}
+
+.add-group-button {
+  width: 62px;
+  background-color: white;
+  color: #666;
+  transition: color 0.5s;
+
+  &:hover {
+    background-color: rgb(147, 206, 222);
+    color: white;
+  }
+}

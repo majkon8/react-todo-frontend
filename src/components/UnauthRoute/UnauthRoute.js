@@ -7,11 +7,7 @@ const UnauthRoute = ({ component: Component, isAuthenticated, ...rest }) => (
   <Route
     {...rest}
     render={(props) =>
-      !isAuthenticated === true ? (
-        <Redirect to="/welcome" />
-      ) : (
-        <Component {...props} />
-      )
+      isAuthenticated ? <Redirect to="/" /> : <Component {...props} />
     }
   />
 );

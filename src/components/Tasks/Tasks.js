@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import AddTask from "../AddTask/AddTask";
 import Task from "../Task/Task";
 import TaskSkeleton from "../TaskSkeleton/TaskSkeleton";
@@ -14,10 +14,22 @@ export function formatDate(dateTime) {
   return `${date} ${time}`;
 }
 
-function Tasks({ getTasks, loading, tasks }) {
+function Tasks({ getTasks, loading, tasks, selectedGroup }) {
+  const [filteredTasks, setFilteredTasks] = useState([]);
+
   useEffect(() => {
     getTasks();
   }, []);
+
+  useEffect(() => {
+    setFilteredTasks(
+      tasks.filter((task) => {
+        if (selectedGroup !== 0) return task.group_id === selectedGroup;
+        if (selectedGroup === 0) return task.important == true;
+        return task;
+      })
+    );
+  }, [tasks, selectedGroup]);
 
   return (
     <div>
@@ -27,7 +39,7 @@ function Tasks({ getTasks, loading, tasks }) {
           ? Array.apply(null, Array(5)).map((el, index) => (
               <TaskSkeleton key={index} />
             ))
-          : tasks.map((task, index) => (
+          : filteredTasks.map((task, index) => (
               <Task
                 taskId={task.id}
                 body={task.body}
@@ -51,6 +63,7 @@ Tasks.propTypes = {
 const mapStateToProps = (state) => ({
   loading: state.UI.loading,
   tasks: state.data.tasks,
+  selectedGroup: state.data.selectedGroup,
 });
 const mapActionsToProps = { getTasks };
 

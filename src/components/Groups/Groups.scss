@@ -1,0 +1,9 @@
+.groups-container {
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 20px;
+
+  .group-normal:nth-child(2) {
+    margin-top: 18px;
+  }
+}

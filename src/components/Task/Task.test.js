@@ -15,7 +15,13 @@ describe("Task component testing", () => {
     const dateTime = formatDate("2020-07-15T11:37:41.000Z");
     wrapper = mount(
       <Provider store={mockedStore}>
-        <Task body="task" done={false} taskId={1} createdAt={dateTime} />
+        <Task
+          body="task"
+          done={false}
+          important={false}
+          taskId={1}
+          createdAt={dateTime}
+        />
       </Provider>
     );
   });
@@ -28,7 +34,7 @@ describe("Task component testing", () => {
     expect(wrapper.find(".task-body").text()).toEqual("task");
   });
 
-  test("displays addd date time correctly", () => {
+  test("displays add date time correctly", () => {
     expect(wrapper.find(".date").text()).toEqual("Added: 15.07.2020 11:37");
   });
 });
