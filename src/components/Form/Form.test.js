@@ -17,9 +17,6 @@ describe("Testing form component", () => {
       </Provider>
     );
   });
-  test("includs form component", () => {
-    expect(wrapper.find("form").exists()).toEqual(true);
-  });
 
   test("includes form", () => {
     expect(wrapper.find("form").exists()).toEqual(true);
@@ -77,7 +74,7 @@ describe("Testing form component", () => {
     );
   });
 
-  test("value of email and password inputs are ''", () => {
+  test("initial value of email and password inputs are ''", () => {
     expect(wrapper.find("#email").props().value).toEqual("");
     expect(wrapper.find("#password").props().value).toEqual("");
   });
