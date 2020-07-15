@@ -40,6 +40,11 @@ export const login = (userData) => async (dispatch) => {
   }
 };
 
+export const logout = () => async (dispatch) => {
+  localStorage.removeItem("refreshToken");
+  dispatch({ type: SET_AUTHENTICATED, payload: false });
+};
+
 // HELPERS
 const setAuthorizationHeader = (tokens) => {
   const accessToken = tokens.accessToken;
