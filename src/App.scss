@@ -82,3 +82,30 @@
     color: hsl(348, 100%, 61%);
   }
 }
+
+.task-skeleton,
+.group-skeleton {
+  width: 100%;
+  height: 50px;
+  transition: background-color 0.5s, color 0.5s;
+  padding-right: 30px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  box-sizing: border-box;
+
+  .task-body-skeleton,
+  .group-name-skeleton {
+    width: 50%;
+    height: 18px;
+    margin-left: 40px;
+  }
+
+  .task-body-skeleton {
+    background-color: #999;
+  }
+
+  .group-name-skeleton {
+    background-color: #fff;
+  }
+}

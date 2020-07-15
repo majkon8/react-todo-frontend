@@ -3,6 +3,7 @@ import "./Groups.scss";
 import AddGroup from "../AddGroup/AddGroup";
 import Group from "../Group/Group";
 import PropTypes from "prop-types";
+import GroupSkeleton from "../GroupSkeleton/GroupSkeleton";
 // Redux
 import { connect } from "react-redux";
 import { getGroups } from "../../redux/actions/dataActions";
@@ -17,9 +18,13 @@ function Groups({ getGroups, loading, groups }) {
       <AddGroup />
       <div className="groups-container">
         <Group name="Important" groupId={0} />
-        {groups.map((group, index) => (
-          <Group name={group.name} groupId={group.id} key={index} />
-        ))}
+        {loading
+          ? Array.apply(null, Array(3)).map((el, index) => (
+              <GroupSkeleton key={index} />
+            ))
+          : groups.map((group, index) => (
+              <Group name={group.name} groupId={group.id} key={index} />
+            ))}
       </div>
     </div>
   );
