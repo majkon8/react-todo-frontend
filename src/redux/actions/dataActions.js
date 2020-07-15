@@ -1,4 +1,4 @@
-import { SET_TASKS, SET_LOADING_UI, CREATE_TASK } from "../types";
+import { SET_TASKS, SET_LOADING_UI, CREATE_TASK, DELETE_TASK } from "../types";
 import axios from "axios";
 
 export const getTasks = () => async (dispatch) => {
@@ -26,6 +26,19 @@ export const createNewTask = (body) => async (dispatch) => {
       console.error(response.data.message);
       return;
     }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const deleteTask = (taskId) => async (dispatch) => {
+  try {
+    const response = await axios.delete("/api/tasks/", { data: { taskId } });
+    if (!response.data.success) {
+      console.error(response.data.message);
+      return;
+    }
+    dispatch({ type: DELETE_TASK, payload: taskId });
   } catch (error) {
     console.error(error);
   }

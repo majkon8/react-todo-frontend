@@ -8,3 +8,4 @@ export const SET_USER = "SET_USER";
 // task reducer types
 export const SET_TASKS = "SET_TASKS";
 export const CREATE_TASK = "CREATE_TASK";
+export const DELETE_TASK = "DELETE_TASK";

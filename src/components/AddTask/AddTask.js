@@ -3,7 +3,7 @@ import "./AddTask.scss";
 import PropTypes from "prop-types";
 // Redux
 import { connect } from "react-redux";
-import { createNewTask, getTasks } from "../../redux/actions/dataActions";
+import { createNewTask } from "../../redux/actions/dataActions";
 
 function AddTask({ createNewTask }) {
   const [taskBody, setTaskBody] = useState("");
@@ -36,7 +36,6 @@ AddTask.propTypes = {
   createNewTask: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({});
 const mapActionsToProps = { createNewTask };
 
-export default connect(mapStateToProps, mapActionsToProps)(AddTask);
+export default connect(null, mapActionsToProps)(AddTask);
