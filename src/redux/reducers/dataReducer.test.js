@@ -146,18 +146,19 @@ describe("Testing data reducers", () => {
       });
     });
 
-    test("Should remove group from state", () => {
+    test("Should remove group from state and tasks in this group", () => {
       const groupId = 3;
       const newState = dataReducer(
         {
           groups: [{ id: 3, name: "group3" }],
+          tasks: [{ id: 1, group_id: 3 }],
         },
         {
           type: DELETE_GROUP,
           payload: groupId,
         }
       );
-      expect(newState).toEqual({ groups: [] });
+      expect(newState).toEqual({ groups: [], tasks: [] });
     });
 
     test("Should set selectedGroup to 1", () => {

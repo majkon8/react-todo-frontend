@@ -62,6 +62,9 @@ export default function (state = initialState, action) {
         groups: [
           ...state.groups.filter((group) => group.id !== action.payload),
         ],
+        tasks: [
+          ...state.tasks.filter((task) => task.group_id !== action.payload),
+        ],
       };
     default:
       return state;

@@ -24,9 +24,9 @@ function Tasks({ getTasks, loading, tasks, selectedGroup }) {
   useEffect(() => {
     setFilteredTasks(
       tasks.filter((task) => {
+        if (selectedGroup === null) return task;
         if (selectedGroup !== 0) return task.group_id === selectedGroup;
         if (selectedGroup === 0) return task.important == true;
-        return task;
       })
     );
   }, [tasks, selectedGroup]);

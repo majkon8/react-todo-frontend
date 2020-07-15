@@ -29,9 +29,9 @@ export const getTasks = () => async (dispatch) => {
   }
 };
 
-export const createTask = (body) => async (dispatch) => {
+export const createTask = (data) => async (dispatch) => {
   try {
-    const response = await axios.post("/api/tasks/", { body });
+    const response = await axios.post("/api/tasks/", data);
     dispatch({ type: CREATE_TASK, payload: response.data.createdTask });
     if (!response.data.success) {
       console.error(response.data.message);

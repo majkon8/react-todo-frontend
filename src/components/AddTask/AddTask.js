@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createTask } from "../../redux/actions/dataActions";
 
-function AddTask({ createTask }) {
+function AddTask({ createTask, selectedGroup }) {
   const [taskBody, setTaskBody] = useState("");
 
   const handleChange = (event) => {
@@ -15,7 +15,11 @@ function AddTask({ createTask }) {
 
   const submit = () => {
     if (taskBody.length === 0) return;
-    createTask(taskBody);
+    const data = {
+      body: taskBody,
+      groupId: selectedGroup && selectedGroup !== 0 ? selectedGroup : null,
+    };
+    createTask(data);
     setTaskBody("");
   };
 
@@ -35,8 +39,14 @@ function AddTask({ createTask }) {
   );
 }
 
-AddTask.propTypes = { createTask: PropTypes.func.isRequired };
+AddTask.propTypes = {
+  createTask: PropTypes.func.isRequired,
+  selectedGroup: PropTypes.number,
+};
 
+const mapStateToProps = (state) => ({
+  selectedGroup: state.data.selectedGroup,
+});
 const mapActionsToProps = { createTask };
 
-export default connect(null, mapActionsToProps)(AddTask);
+export default connect(mapStateToProps, mapActionsToProps)(AddTask);
