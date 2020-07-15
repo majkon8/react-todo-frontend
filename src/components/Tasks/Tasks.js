@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import AddTask from "../AddTask/AddTask";
 import Task from "../Task/Task";
+import TaskSkeleton from "../TaskSkeleton/TaskSkeleton";
 import "./Tasks.scss";
 import PropTypes from "prop-types";
 // Redux
@@ -22,15 +23,17 @@ function Tasks({ getTasks, loading, tasks }) {
     <div>
       <AddTask />
       <div className="tasks-container">
-        {tasks.map((task, index) => (
-          <Task
-            taskId={task.id}
-            body={task.body}
-            done={task.done}
-            createdAt={formatDate(task.created_at)}
-            key={index}
-          />
-        ))}
+        {loading
+          ? Array.apply(null, Array(5)).map(() => <TaskSkeleton />)
+          : tasks.map((task, index) => (
+              <Task
+                taskId={task.id}
+                body={task.body}
+                done={task.done}
+                createdAt={formatDate(task.created_at)}
+                key={index}
+              />
+            ))}
       </div>
     </div>
   );

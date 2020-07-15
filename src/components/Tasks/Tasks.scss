@@ -3,11 +3,13 @@
   overflow: hidden;
   margin-top: 20px;
 
-  .task:nth-child(even) {
+  .task:nth-child(even),
+  .task-skeleton:nth-child(even) {
     background: white;
   }
 
-  .task:nth-child(odd) {
+  .task:nth-child(odd),
+  .task-skeleton:nth-child(odd) {
     background-color: #eee;
   }
 
