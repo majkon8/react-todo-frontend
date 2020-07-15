@@ -4,6 +4,7 @@ import {
   CREATE_TASK,
   DELETE_TASK,
   TOGGLE_TASK_DONE,
+  TOGGLE_TASK_IMPORTANT,
 } from "../types";
 import axios from "axios";
 
@@ -52,12 +53,25 @@ export const deleteTask = (taskId) => async (dispatch) => {
 
 export const toggleTaskDone = (data) => async (dispatch) => {
   try {
-    const response = await axios.patch("/api/tasks/", data);
+    const response = await axios.patch("/api/tasks/done", data);
     if (!response.data.success) {
       console.error(response.data.message);
       return;
     }
     dispatch({ type: TOGGLE_TASK_DONE, payload: data.taskId });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const togggleTaskImportant = (data) => async (dispatch) => {
+  try {
+    const response = await axios.patch("/api/tasks/important", data);
+    if (!response.data.success) {
+      console.error(response.data.message);
+      return;
+    }
+    dispatch({ type: TOGGLE_TASK_IMPORTANT, payload: data.taskId });
   } catch (error) {
     console.error(error);
   }

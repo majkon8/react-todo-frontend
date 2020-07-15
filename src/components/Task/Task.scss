@@ -41,6 +41,26 @@
     }
   }
 
+  // If task is saved to important
+  .reverse-icon-star-container {
+    &:hover {
+      .icon-star-full {
+        display: none;
+      }
+      .icon-star-empty {
+        display: inline-block;
+      }
+    }
+
+    .icon-star-empty {
+      display: none;
+    }
+
+    .icon-star {
+      color: gold;
+    }
+  }
+
   .icon-trash-container {
     position: absolute;
     right: 0;

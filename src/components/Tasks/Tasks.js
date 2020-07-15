@@ -24,12 +24,15 @@ function Tasks({ getTasks, loading, tasks }) {
       <AddTask />
       <div className="tasks-container">
         {loading
-          ? Array.apply(null, Array(5)).map(() => <TaskSkeleton />)
+          ? Array.apply(null, Array(5)).map((el, index) => (
+              <TaskSkeleton key={index} />
+            ))
           : tasks.map((task, index) => (
               <Task
                 taskId={task.id}
                 body={task.body}
                 done={task.done}
+                important={task.important}
                 createdAt={formatDate(task.created_at)}
                 key={index}
               />

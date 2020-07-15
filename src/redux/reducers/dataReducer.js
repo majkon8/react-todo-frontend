@@ -3,6 +3,7 @@ import {
   CREATE_TASK,
   DELETE_TASK,
   TOGGLE_TASK_DONE,
+  TOGGLE_TASK_IMPORTANT,
 } from "../types";
 
 const initialState = {
@@ -10,6 +11,7 @@ const initialState = {
 };
 
 export default function (state = initialState, action) {
+  let updatedTasks;
   switch (action.type) {
     case SET_TASKS:
       return { ...state, tasks: action.payload };
@@ -21,9 +23,20 @@ export default function (state = initialState, action) {
         tasks: [...state.tasks.filter((task) => task.id !== action.payload)],
       };
     case TOGGLE_TASK_DONE:
-      const updatedTasks = state.tasks.map((task) => {
+      updatedTasks = state.tasks.map((task) => {
         if (task.id === action.payload) {
           task.done = !task.done;
+        }
+        return task;
+      });
+      return {
+        ...state,
+        tasks: [...updatedTasks],
+      };
+    case TOGGLE_TASK_IMPORTANT:
+      updatedTasks = state.tasks.map((task) => {
+        if (task.id === action.payload) {
+          task.important = !task.important;
         }
         return task;
       });
