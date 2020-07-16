@@ -19,14 +19,6 @@ describe("Logout component testing", () => {
   });
 
   test("includes icon", () => {
-    expect(
-      wrapper.containsMatchingElement(
-        <i
-          title="Log out"
-          class="logout-icon fa fa-sign-out"
-          aria-hidden="true"
-        ></i>
-      )
-    ).toEqual(true);
+    expect(wrapper.find(".logout-icon").exists()).toEqual(true);
   });
 });

@@ -18,6 +18,10 @@
   border-radius: 10px;
   /* overflow: hidden to curve the border */
   overflow: hidden;
+
+  @media screen and (max-width: 768px) {
+    overflow: unset;
+  }
 }
 
 .add-container {

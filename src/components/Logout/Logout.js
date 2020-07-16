@@ -12,7 +12,7 @@ function Logout({ logout }) {
     <i
       onClick={handleLogout}
       title="Log out"
-      class="logout-icon fa fa-sign-out"
+      className="logout-icon fa fa-sign-out"
       aria-hidden="true"
     ></i>
   );
