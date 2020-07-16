@@ -10,6 +10,7 @@ import {
   CREATE_GROUP,
   DELETE_GROUP,
 } from "../types";
+import store from "../store";
 import axios from "axios";
 
 export const getTasks = () => async (dispatch) => {
@@ -122,6 +123,8 @@ export const deleteGroup = (groupId) => async (dispatch) => {
       console.error(response.data.message);
       return;
     }
+    const selectedGroup = store.getState().data.selectedGroup;
+    if (selectedGroup === groupId) dispatch({ type: SET_GROUP, payload: null });
     dispatch({ type: DELETE_GROUP, payload: groupId });
   } catch (error) {
     console.error(error);
