@@ -3,6 +3,9 @@ import {
   SET_ERROR,
   SET_SUCCESS,
   SET_AUTHENTICATED,
+  SET_TASKS,
+  SET_GROUP,
+  SET_GROUPS
 } from "../types";
 import axios from "axios";
 
@@ -42,6 +45,9 @@ export const login = (userData) => async (dispatch) => {
 
 export const logout = () => async (dispatch) => {
   localStorage.removeItem("refreshToken");
+  dispatch({type: SET_TASKS, payload: []})
+  dispatch({type: SET_GROUPS, payload: []})
+  dispatch({type: SET_GROUP, payload: null})
   dispatch({ type: SET_AUTHENTICATED, payload: false });
 };
 
